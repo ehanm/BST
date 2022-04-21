@@ -5,8 +5,9 @@
 using namespace std;
 
 void addfunction(Node* &node, int num);
-void printfunction(Node* node);
+void printfunction(Node* node, int depth);
 void search(Node* node, int num);
+void deletefunction(Node* &node, int num);
 
 int main(){
 
@@ -46,23 +47,22 @@ int main(){
     }
     if (strcmp(input, "PRINT") == 0){
 
-      
+      printfunction(head, 0);
       
     }
     if (strcmp(input, "DELETE") == 0){
 
-      // delete (wednesday-weekend)
+      cout << "What number do you want to delete?" << endl;
 
+      cin >> x;
+      
+      deletefunction(head, x);
+      
     }
     if (strcmp(input, "QUIT") == 0){
 
       running = false;
       break;
-
-    }
-    else {
-
-      cout << "Invalid input!" << endl;
 
     }
 
@@ -104,6 +104,37 @@ void addfunction(Node* &node, int num){
   
 }
 
+void printfunction(Node* node, int depth){
+
+  if (node == NULL){
+
+    cout << "tree is empty!" << endl;
+    return;
+    
+  }
+  
+  if (node->right != NULL){
+
+    printfunction(node->right, depth + 1);
+    
+  }
+
+  for (int i = 0; i < depth; i++){
+
+    cout << "\t";
+    
+  }
+
+  cout << node->data << endl;
+
+  if (node->left != NULL){
+
+    printfunction(node->left, depth + 1);
+
+  }
+
+}
+
 void search(Node* node, int num){
 
   if (node == NULL){
@@ -136,8 +167,37 @@ void search(Node* node, int num){
 
     }
 
+  }
+    
+}
+
+void deletefunction(Node* &node, int num){
+
+  if (node == NULL){
+
+    cout << "can't delete!" << endl;
 
   }
   
-  
+  if (node->data < num){
+
+    deletefunction(node->right, num);
+
+  }
+  else if (node->data > num) {
+
+    deletefunction(node->left, num);
+
+  }
+  else {
+    // case 1: its a leaf
+    if (node->right == NULL && node->left == NULL){
+
+      node = NULL;
+
+    }
+
+
+  }
+
 }
